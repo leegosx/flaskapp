@@ -1,0 +1,56 @@
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Work+Sans&display=swap" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-40 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
+                    <h3 class="text-[#111418] tracking-light text-2xl font-bold leading-tight px-4 text-center pb-2 pt-5">Your file has been sorted</h3>
+                    <p class="text-[#111418] text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">You can download the sorted file or view it in your browser.</p>
+                    
+                    <div class="flex px-4 py-3 justify-center">
+                        <a href="data:text/csv;charset=utf-8,{{ csv_data|urlencode }}" download="{{ filename }}">
+                            <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#1980e6] text-white gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]">
+                                <div class="text-white" data-icon="ArrowDown" data-size="20px" data-weight="regular">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                    </svg>
+                                </div>
+                                <span class="truncate">Download file</span>
+                            </button>
+                        </a>
+                    </div>
+
+                    <p class="text-[#637588] text-sm font-normal leading-normal pb-3 pt-1 px-4 text-center">{{ filename }}</p>
+                    
+                    <div class="flex px-4 py-3 justify-center">
+                        <button onclick="toggleFileContent()"
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]">
+                            <span class="truncate">View file</span>
+                        </button>
+                    </div>
+                    
+                    <div id="fileContent" style="display: none;" class="px-4 py-3">
+                        <textarea rows="10" class="w-full">{{ csv_data }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFileContent() {
+            const fileContent = document.getElementById('fileContent');
+            if (fileContent.style.display === 'none' || fileContent.style.display === '') {
+                fileContent.style.display = 'block';
+            } else {
+                fileContent.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
