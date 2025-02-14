@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortapp</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-40 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                    <div class="flex flex-wrap justify-between gap-3 p-4">
+                        <p class="text-[#111418] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Sort your file</p>
+                    </div>
+                    <p class="text-[#111418] text-base font-normal leading-normal pb-3 pt-1 px-4">
+                        Upload your unsorted CSV file. We'll sort it for you.
+                    </p>
+
+                    <form action="/" method="post" enctype="multipart/form-data" class="flex flex-col p-4">
+                        <div class="flex flex-col items-center gap-6 rounded-xl border-2 border-dashed border-[#dce0e5] px-6 py-14">
+                            <input type="file" name="file" accept=".csv" class="hidden" id="fileInput" onchange="updateFileName()">
+                            <label
+                                for="fileInput"
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]">
+                                <span class="truncate">Upload file</span>
+                            </label>
+                        </div>
+
+                        <p id="fileNameLabel" class="text-[#637588] text-sm font-normal leading-normal pb-3 pt-1 px-4">
+                            {% if filename %}
+                                Uploaded file: {{ filename }}
+                            {% else %}
+                                No file chosen
+                            {% endif %}
+                        </p>
+
+                        <p class="text-[#637588] text-sm font-normal leading-normal pb-3 pt-1 px-4">Max 1 file</p>
+
+                        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+                            <label class="flex flex-col min-w-40 flex-1">
+                                <select name="column" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 bg-[image:--select-button-svg] placeholder:text-[#637588] p-4 text-base font-normal leading-normal">
+                                    <option value="Vorname">Vorname</option>
+                                    <option value="Nachname">Nachname</option>
+                                    <option value="Telefonnummer">Telefonnummer</option>
+                                    <option value="PLZ">PLZ</option>
+                                    <option value="Stadt">Stadt</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="flex px-4 py-3 justify-end">
+                            <button type="submit"
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#1980e6] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                                <span class="truncate">Sort file</span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateFileName() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameLabel = document.getElementById('fileNameLabel');
+            if (fileInput.files.length > 0) {
+                fileNameLabel.textContent = "Uploaded file: " + fileInput.files[0].name;
+            } else {
+                fileNameLabel.textContent = "No file chosen";
+            }
+        }
+    </script>
+</body>
+</html>
