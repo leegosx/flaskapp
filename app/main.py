@@ -31,6 +31,10 @@ def index():
     if request.method == 'POST':
         uploaded_file = request.files['file']
         column = request.form['column']
+
+        if not uploaded_file:
+            return render_template('index.html', error="Please select a file.")
+        
         filename = uploaded_file.filename
 
         sorted_csv = sort_csv(uploaded_file, column)
