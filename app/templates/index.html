@@ -65,16 +65,7 @@
         </div>
     </div>
 
-    <script>
-        function updateFileName() {
-            const fileInput = document.getElementById('fileInput');
-            const fileNameLabel = document.getElementById('fileNameLabel');
-            if (fileInput.files.length > 0) {
-                fileNameLabel.textContent = "Uploaded file: " + fileInput.files[0].name;
-            } else {
-                fileNameLabel.textContent = "No file chosen";
-            }
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+
 </body>
 </html>
