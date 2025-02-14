@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import csv
 import io
 
@@ -25,9 +25,22 @@ def sort_csv(file, target_column):
         print(f"Error: {e}")
         return None
 
-@app.route("/", strict_slashes=False)
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return 'Hello World'
+    filename = None
+    if request.method == 'POST':
+        uploaded_file = request.files['file']
+        column = request.form['column']
+        filename = uploaded_file.filename
 
-if __name__ == "__main__":
+        sorted_csv = sort_csv(uploaded_file, column)
+        
+        if sorted_csv:
+            return render_template('result.html', csv_data=sorted_csv, filename=filename)
+        else:
+            return "Error processing file", 400
+
+    return render_template('index.html', filename=filename)
+
+if __name__ == '__main__':
     app.run()
